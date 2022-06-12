@@ -1,9 +1,4 @@
 '''
-   @ Alisha Kareemulla
-   @ Thulasi Theja K S
-'''
-
-'''
 Markov Decision Process is used for solving the Rubik's cube. 
 SARSA has been implemented to enable state space exploration. 
 SARSA--> It is an on policy algorithm, which means the agent interacts with its environment and updates policy for based on the action taken.
