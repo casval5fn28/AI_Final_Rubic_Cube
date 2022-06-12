@@ -24,7 +24,7 @@ from time import time
 import random
 import torchvision.models as models
 import pickle
-
+from imgaug import augmenters as iaa
 
 """## Helper functions
 Set of helper functions
@@ -339,6 +339,4 @@ for epoch in range(0,Config.train_number_epochs):
 #savePath = './resL-300-withRotate.pth'
 savePath = './res-300-normalized.pth'
 torch.save(net.state_dict(), savePath)
-
-
 
