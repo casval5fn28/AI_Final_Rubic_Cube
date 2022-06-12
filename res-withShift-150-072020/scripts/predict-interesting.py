@@ -27,7 +27,7 @@ import pickle
 
 
 import models_lpf.resnet as mod_res
-
+from imgaug import augmenters as iaa
 
 useGPU = True
 enableEval = False
@@ -366,10 +366,10 @@ def compareNCards(imgPath0,imgPath1,targetDirName,n_compare=10):
 
     # N-way one shot learning evaluation
     # Compare positive images
-    euclidean_distance,featureMap = getSimilarRank(imagePath0,imagePath1)
+    euclidean_distance,featureMap = getSimilarRank(imgPath0,imgPath1)
     output1 = featureMap[0]
 
-    rankList.append((imagePath1.split('/')[-2],euclidean_distance.item(),imagePath1))
+    rankList.append((imgPath1.split('/')[-2],euclidean_distance.item(),imgPath1))
     featureMapList.append(output1)
 
 
