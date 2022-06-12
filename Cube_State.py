@@ -1,12 +1,6 @@
-'''
-   @ Alisha Kareemulla
-   @ Thulasi Theja K S
-'''
-
 '''The following is the problem formulation of the Rubik's Cube puzzle,
 which comprises of the state definition and valid move generator.
 '''
-
 
 # Each face is represented by a number
 FACE1 = "TOP"
