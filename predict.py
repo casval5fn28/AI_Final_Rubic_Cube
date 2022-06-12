@@ -33,6 +33,7 @@ enableEval = False
 #enableEval = True
 
 targetDirName = './cardDatabaseFull/'
+#targetDirName = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
 assert os.path.exists(targetDirName)
 
 loadPath = './savedModels/res-withShift-150-072020.pth'
@@ -105,8 +106,8 @@ imagePath0 = './data/cards/training/dark-magician/0.jpg'
 
 
 #imagePath0 = './test-input/bewd_0.png'
-groundTruthPath = targetDirName + 'BlueEyes-White-Dragon-1-89631139/896311391.jpg'
-imagePath0 = './test-input/bewd_dd.png'
+groundTruthPath = targetDirName + 'Herald-of-Ultimateness-0-48546368/485463680.jpg'
+imagePath0 = './test-input/hou_0.png'
 
 assert os.path.exists(imagePath0)
 assert os.path.exists(groundTruthPath)
@@ -139,6 +140,9 @@ class Config():
     
     training_dir = "./cardDatabaseFull/"
     testing_dir = "./cardDatabaseFull/"
+    
+    #training_dir = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
+    #testing_dir = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
     
     train_batch_size = 24
     train_number_epochs = 120
