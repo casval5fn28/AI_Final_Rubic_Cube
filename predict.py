@@ -64,50 +64,8 @@ dim=(255,255)
 
 visualizeResult = True
 
-'''
-tdm_0.png
-tdms_2.png
-
-tw_0.png
-
-/dark-magician/1.jpg
-shifted-dm_0.png
-
-bewd_dd.png
-'''
-
-'''
-# Card Crush Virus
-groundTruthPath = targetDirName + 'Crush-Card-Virus-0-57728570/577285700.jpg'
-#groundTruthPath = targetDirName + 'Crush-Card-Virus-1-57728570/577285701.jpg'
-imagePath0 = './test-input/ccv_1.png'
-'''
-
-'''
-# Toon Dark Magician (tdm_0.png fails) (original rank of 1032) (HOG rank of 118)
-groundTruthPath = targetDirName + 'Toon-Dark-Magician-0-21296502/212965020.jpg'
-#imagePath0 = './test-input/tdm_0.png'
-imagePath0 = './test-input/tdms_0.png'
-'''
-
-
-# Time Wizard 
-groundTruthPath = targetDirName + 'Time-Wizard-0-71625222/716252220.jpg'
-imagePath0 = './test-input/tw_0.png'
-
-
-'''
-# Dark Magician (still problems with sifted-dm_0.png)
-#imagePath0 = './test-input/dm_0.png'
-groundTruthPath = targetDirName + 'Dark-Magician-0-46986414/469864140.jpg'
-imagePath0 = './data/cards/training/dark-magician/0.jpg'
-#imagePath0 = './test-input/sifted-dm_0.png'
-'''
-
-
-#imagePath0 = './test-input/bewd_0.png'
 groundTruthPath = targetDirName + 'Herald-of-Ultimateness-0-48546368/485463680.jpg'
-imagePath0 = './test-input/hou_0.png'
+imagePath0 = './test-input/hou_0.jpg'
 
 assert os.path.exists(imagePath0)
 assert os.path.exists(groundTruthPath)
