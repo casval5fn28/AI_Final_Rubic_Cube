@@ -1,9 +1,4 @@
 '''
-   @ Alisha KAreemulla
-   @ Thulasi Theja K S
-'''
-
-'''
     This file Run.py is the code that needs to be executed if we want to solve the rubic cube by using SARSA algorithm.
     Currently this code runs for the 2*2*2 rubik cube size.
     Once the user runs the Run.py file, it prompts the user to enter the number of times they want to 
