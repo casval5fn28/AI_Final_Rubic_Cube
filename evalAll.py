@@ -18,7 +18,6 @@ import torch.nn.functional as F
 import cv2
 from matplotlib import pyplot as plt
 import os
-#from torchsummary import summary
 
 from time import time
 import random
@@ -26,11 +25,10 @@ import torchvision.models as models
 import pickle
 
 import models_lpf.resnet as mod_res
-
+from imgaug import augmenters as iaa
 
 useGPU = True
 enableEval = False
-#enableEval = True
 
 
 HOGRankingEnable = True
@@ -416,10 +414,10 @@ def compareNCards(imgPath0,imgPath1,targetDirName,n_compare=10):
 
     # N-way one shot learning evaluation
     # Compare positive images
-    euclidean_distance,featureMap = getSimilarRank(imagePath0,imagePath1)
+    euclidean_distance,featureMap = getSimilarRank(imgPath0,imgPath1)
     output1 = featureMap[0]
 
-    rankList.append((imagePath1.split('/')[-2],euclidean_distance.item(),imagePath1))
+    rankList.append((imgPath1.split('/')[-2],euclidean_distance.item(),imgPath1))
     featureMapList.append(output1)
 
 
@@ -1104,5 +1102,3 @@ rankListFinal.sort(key = lambda x: x[1])
 rankIter = 0
 for name,score,absPath,numHOGPoints,originalScore in rankListFinal:
   print(absPath)
-
-
