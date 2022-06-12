@@ -24,7 +24,7 @@ from time import time
 import random
 import torchvision.models as models
 import pickle
-
+from imgaug import augmenters as iaa
 
 """## Helper functions
 Set of helper functions
@@ -312,10 +312,10 @@ def compareNCards(imgPath0,imgPath1,targetDirName,n_compare=10):
 
     # N-way one shot learning evaluation
     # Compare positive images
-    euclidean_distance,featureMap = getSimilarRank(imagePath0,imagePath1)
+    euclidean_distance,featureMap = getSimilarRank(imgPath0,imgPath1)
     output1 = featureMap[0]
 
-    rankList.append((imagePath1.split('/')[-2],euclidean_distance.item(),imagePath1))
+    rankList.append((imgPath1.split('/')[-2],euclidean_distance.item(),imgPath1))
     featureMapList.append(output1)
 
 
@@ -334,7 +334,7 @@ def compareNCards(imgPath0,imgPath1,targetDirName,n_compare=10):
     # Different
     for filePath in negList:
         trueFilePath = filePath 
-        euclidean_distance,featureMap = getSimilarRank(imagePath0,trueFilePath)
+        euclidean_distance,featureMap = getSimilarRank(imgPath0,trueFilePath)
         output1 = featureMap[0]
 
         rankList.append((trueFilePath.split('/')[-2],euclidean_distance.item(),trueFilePath))
