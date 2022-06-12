@@ -1,7 +1,3 @@
-'''
-   @ Alisha KAreemulla
-   @ Thulasi Theja K S
-'''
 import numpy as np
 import random
 import time
