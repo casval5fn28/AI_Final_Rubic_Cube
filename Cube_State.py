@@ -1,5 +1,6 @@
-'''The following is the problem formulation of the Rubik's Cube puzzle,
-which comprises of the state definition and valid move generator.
+'''
+  The problem formulation of the Rubik's Cube puzzle,
+  which comprises of the state definition and valid move generator.
 '''
 
 # Each face is represented by a number
@@ -12,7 +13,7 @@ FACE6 = "FRONT"
 
 FACE_LIST = [FACE1, FACE2, FACE3, FACE4, FACE5, FACE6]
 
-LIVING_REWARD = -0.04
+minus_reward = -0.04
 
 import copy
 
@@ -23,7 +24,9 @@ class State:
   def __eq__(self, s2):
     if not (type(self)==type(s2)): return False
     for f in [FACE1, FACE2, FACE3, FACE4, FACE5, FACE6]:
-      if self.d[f] != s2.d[f]: return False
+      if self.d[f] != s2.d[f]: 
+        return False
+
     return True
 
   def __str__(self):
@@ -42,43 +45,43 @@ class State:
     face5 = self.d[face_list[4]]
     face6 = self.d[face_list[5]]
 
-    txt = "\n\n\t   ["
-    txt += str(face5["q2"]) + "  " + str(face5["q1"])
-    txt += "]\n"
-    txt += "\t   [" + str(face5["q3"]) + "  " + str(face5["q4"]) + "]"
+    pic = "\n\n\t   ["
+    pic += str(face5["q2"]) + "  " + str(face5["q1"])
+    pic += "]\n"
+    pic += "\t   [" + str(face5["q3"]) + "  " + str(face5["q4"]) + "]"
 
-    txt += "\n\n"
-    txt += "  [" + str(face2["q2"]) + "  " + str(face2["q1"]) + "]     [" + str(face1["q2"]) + "  " + str(face1["q1"]) + "]     [" +\
+    pic += "\n\n"
+    pic += "  [" + str(face2["q2"]) + "  " + str(face2["q1"]) + "]     [" + str(face1["q2"]) + "  " + str(face1["q1"]) + "]     [" +\
            str(face3["q2"]) + "  " + str(face3["q1"]) + "]     [" + str(face4["q2"]) + "  " + str(face4["q1"]) + "]"
-    txt += "\n"    
-    txt += "  [" + str(face2["q3"]) + "  " + str(face2["q4"]) + "]     [" + str(face1["q3"]) + "  " + str(face1["q4"]) + "]     [" + \
+    pic += "\n"    
+    pic += "  [" + str(face2["q3"]) + "  " + str(face2["q4"]) + "]     [" + str(face1["q3"]) + "  " + str(face1["q4"]) + "]     [" + \
            str(face3["q3"]) + "  " + str(face3["q4"]) + "]     [" + str(face4["q3"]) + "  " + str(face4["q4"]) + "]"
-    txt += "\n\n" 
+    pic += "\n\n" 
 
-    txt += "\t   ["
-    txt += str(face6["q2"]) + "  " + str(face6["q1"])
-    txt += "]\n"
-    txt += "\t   [" + str(face6["q3"]) + "  " + str(face6["q4"]) + "]"
+    pic += "\t   ["
+    pic += str(face6["q2"]) + "  " + str(face6["q1"])
+    pic += "]\n"
+    pic += "\t   [" + str(face6["q3"]) + "  " + str(face6["q4"]) + "]"
 
-    return txt
+    return pic
 
   def __hash__(self):
     return (self.__str__()).__hash__()
 
   def copy(self):
     # Performs an appropriately deep copy of a state,
-    # for use by operators in creating new states.
+    # Used by operators for creating new states.
     news = copy.deepcopy(self)
     return news
 
   def can_move(self):
-    '''Tests whether it's legal to move from one state to another. Since all moves are legal, always returns True'''
+    '''Tests whether it's legal to move from one state to another. Always returns True because all moves are legal, a'''
     return True
     
   def move(self, moveName):
     '''
-    Assuming it's legal to make the move, this computes
-    the new state resulting from moving from one state to another.
+    Assuming it's legal to move, this calculates the new state
+    resulting from moving from one state to another.
     '''
     news = self.copy()
     l1 = moveName.split("-")
@@ -418,27 +421,29 @@ class State:
 
 # Transition probability
 def T(s, a, sp):
-    '''Compute the transition probability for going from state s to
-       state sp after taking action a.'''
+    '''
+      Compute the transition probability for going from state 's' to
+      state 'sp' after taking action 'a'.
+    '''
     return 1
 
 
 def R(s, a, sp):
   '''
-  If the transition from the exising goal state leads to a goal state
-  return a reward of +100. Otherwise return a living reward of -0.04
+    If transition from exising goal state leads to a goal state ,
+    then return  reward '+100'. Otherwise return living reward '-0.04' .
   '''
   # Handle goal state transitions first...
   if goalStateCheck(sp):
     return 100.0    
   # Handle all other transitions:
-  return LIVING_REWARD
+  return minus_reward
 
 
 '''
-Check for all possible goal states. 
-A goal state looked from any orientation is a goal state, i.e., 
-a rotated cube which is at the goal state.
+  Check for all possible goal states. 
+  A goal state looked from any orientation is a goal state, i.e., 
+  a rotated cube which is at the goal state.
 '''
 def goalStateCheck(s):
     for side, value1 in s.d.items():
@@ -451,12 +456,12 @@ def goalStateCheck(s):
 
 
 def goal_test(s):
-  '''Checks for Goal state  '''
+  '''Check for Goal state  '''
   goalStateCheck(s)
 
 
 def goal_message(s):
-  return "Rubik's Cube has been solved!"
+  return "Rubik's Cube is solved!"
 
 
 class Operator:
