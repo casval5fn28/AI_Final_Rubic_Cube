@@ -1,10 +1,9 @@
 '''
-    This file Run.py is the code that needs to be executed if we want to solve the rubic cube by using SARSA algorithm.
-    Currently this code runs for the 2*2*2 rubik cube size.
-    Once the user runs the Run.py file, it prompts the user to enter the number of times they want to 
+    Executed for using SARSA algorithm to solve the cube . Initially runs for the 2*2*2 rubik cube size.
+    Once the user runs the this file, it asks the users to enter the number of times they want to 
     shuffle the Rubik's cube to define the start state.
-    Intially the rubik cube is the solved one and after taking input from the user, it gets scrambled.
-    One can enter python Run.py in the command prompt to see the output.
+    Rubik cube is the solved one in the beginning . After taking input from the user, it gets scrambled.
+    One can enter python Run.py in the command prompt to get output.
 '''
 
 import Cube_State as Cubes, MDP, sys, random
@@ -16,12 +15,12 @@ def test():
     print("The goal state is :\n")
     print(initial_state, "\n")
 
-    shuffles = input("Enter the number of times you want to shuffle the solved Rubik's cube: ")
+    shuffles = input("Enter the times you want to shufflevRubik's cube : ")
     for i in shuffles:
         action = random.choice(Cubes.ACTIONS)
         initial_state = action_ops[action].state_transf(initial_state)
 
-    print("The new initial state is :\n")
+    print("New initial state is :\n")
     print(initial_state, "\n")
 
     # Initialize MDP and initialize the appropriate class variables.
@@ -37,7 +36,6 @@ def test():
     rubik_MDP.register_weights([0, 0])
 
     print("********* SARSA LEARNING *********")
-    # Parameters--> discount, episodes, epsilon, learning_rate
-    rubik_MDP.sarsaLearning(0.9, 100, 0.2, 0.05)
+    rubik_MDP.sarsaLearning(0.9, 100, 0.2, 0.05)# Parameters--> discount, episodes, epsilon, learning_rate
 
 test()
