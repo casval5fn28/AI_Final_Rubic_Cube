@@ -1,11 +1,13 @@
 '''
 Markov Decision Process is used for solving the Rubik's cube. 
-SARSA has been implemented to enable state space exploration. 
-SARSA--> It is an on policy algorithm, which means the agent interacts with its environment and updates policy for based on the action taken.
-Feature engineering has been performed to select features to update the Q values using linear function approximation.
-Epsilon greedy algorithm is used to decide on the first action and once the agent is in the new state, 
+SARSA is implemented to enable state space exploration. 
+SARSA's agent interacts with its environment and updates policy for based on the action taken.
+Feature engineering is performed to select features to update Q values using linear function approximation.
+
+Epsilon greedy algorithm is used to decide the first action and once the agent is in the new state, 
 the choice of action is based on the best policy action for that state.
-Q-Learning--> Here all state action combinations are known and updates to the policy happen on these values.
+
+For Q-Learning , all state action combinations are known and updates to the policy happen on these values.
 '''
 
 import random
@@ -39,7 +41,7 @@ class MDP:
     def register_goal_state(self, goal_state):
         self.goal_state = goal_state
 
-    # Check if goal state reached
+    # Check if we reach the goal state 
     def register_goal_state_check(self, goal_state_check):
         self.goal_state_check = goal_state_check
         
@@ -51,20 +53,20 @@ class MDP:
     def register_weights(self, weights):
         self.weights = weights
 
-    # Defines the action to do
+    # Defines what action to do
     def register_action_to_op(self, action_to_op):
         self.action_to_op = action_to_op
 
-    # Here the parameters are discount->0.9, episodes-> 100, epsilon->0.2, learning_rate->0.05
-    def sarsaLearning(self, discount, nEpisodes, epsilon, learning_rate):
-        # w0 is assumed to be 1
-        w0 = 1
+    # Here the parameters are discount->0.9, n_episodes-> 100, epsilon->0.2, learning_rate->0.05
+    def sarsaLearning(self, discount, n_episodes, epsilon, learning_rate):
+        # tmp is assumed to be 1
+        tmp = 1
         # Counter to track how many episodes got to the goal state
         episode_goal_count = 0
-        for j in range(nEpisodes):
+        for j in range(n_episodes):
             s = self.current_state
             best_action = None
-            # choose an action (a) based on the epsilon greedy policy
+            # choose an action 'a' based on epsilon greedy policy
             random_num = random.random()
             if random_num > epsilon:
                 m_val = -1000
@@ -78,14 +80,15 @@ class MDP:
             else:
                 best_action = random.choice(self.actions)
             count = 0
+
             # The stopping condition is to check for the goal state
             while not s == self.goal_state:
                 count += 1
-                # Use a found earlier to move to s'
+                # Use a found earlier to move to 's_prime'
                 s_prime = self.action_to_op[best_action].state_transf(s)
-                # Get the reward for the (s, a, s') transition
+                # Get the reward for the (s, a, 's_prime') transition
                 reward = self.R(s, best_action, s_prime)
-                # Policy based best action for a'
+                # Policy based best action for 'a_prime'
                 best_action_prime = None
                 m_val = -1000
                 for a_prime in self.actions:
@@ -93,41 +96,42 @@ class MDP:
                         if self.q[(s_prime, a_prime)] > m_val:
                             m_val = self.q[(s_prime, a_prime)]
                             best_action_prime = a_prime
+
                 if best_action_prime == None:
                     best_action_prime = random.choice(self.actions)
-                # The q values are updated based on Linear function approximation
-                self.q[(s_prime, best_action_prime)] = w0 + self.weights[0]*self.features[0](s_prime) + self.weights[1]*self.features[1](s_prime) 
-                self.q[(s, best_action)] = w0 + self.weights[0]*self.features[0](s) + self.weights[1]*self.features[1](s)
+                # Q-values are updated based on Linear function approximation
+                self.q[(s_prime, best_action_prime)] = tmp + self.weights[0]*self.features[0](s_prime) + self.weights[1]*self.features[1](s_prime) 
+                self.q[(s, best_action)] = tmp + self.weights[0]*self.features[0](s) + self.weights[1]*self.features[1](s)
                 # Calculate delta
                 delta = reward + discount*self.q[(s_prime, best_action_prime)] - self.q[(s, best_action)]
                 weight_sum = 0
+                
                 # Update weights
                 for i in range(len(self.features)):
                     self.weights[i] += learning_rate*delta*self.features[i](s)
                     weight_sum += self.weights[i]
-                w0 = learning_rate*delta*1 # f0 is 1 by default
-                weight_sum = w0 + sum(self.weights)
+                tmp = learning_rate*delta*1 # f0 is 1 by default
+                weight_sum = tmp + sum(self.weights)
                 # Normalize weights as the sum of weights for all features can't be more than 1.
-                w0 = w0/weight_sum
+                tmp = tmp/weight_sum
                 for i in range(len(self.features)):
                     self.weights[i] = self.weights[i]/weight_sum
-                # Make a = a'
-                #      s = s'
+                    
+                # Make a = a_prime ,s = s_prime
                 s = s_prime
                 best_action = best_action_prime
                 if self.goal_state_check(s): # Alternate orientations of the goal state are also goal states
                     print("====================================")
                     print("\nGoal state reached for episode ", j)
-                    print("Action taken to reach s' ", best_action)
+                    print("Action taken to reach s_prime ", best_action)
                     print("Q value for (s, a) ", self.q[(s, best_action)])
                     print("Goal state reached ", s, "\n")
                     episode_goal_count+=1
                     break
 
-                ''' Restrict the number of moves to 50 per episode as some orientations of the start 
-                    state may take a very long time to get to the goal state'''
+                ''' Restrict number of moves to 50 per episode , since some orientations 
+                    of the start state may take a long time getting to the goal state'''
                 if count > 50:
                     break
 
         print("The goal state was reached in ", episode_goal_count, "episodes.")
-
