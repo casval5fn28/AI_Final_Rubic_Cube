@@ -15,7 +15,7 @@ def test():
     print("The goal state is :\n")
     print(initial_state, "\n")
 
-    shuffles = input("Enter the times you want to shufflevRubik's cube : ")
+    shuffles = input("Enter the times you want to shuffle Rubik's cube : ")
     for i in shuffles:
         action = random.choice(Cubes.ACTIONS)
         initial_state = action_ops[action].state_transf(initial_state)
